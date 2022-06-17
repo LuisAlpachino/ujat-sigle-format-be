@@ -1,0 +1,10 @@
+{
+    "type": "oracle",
+    "host": "localhost",
+    "port": 49161,
+    "username": "system",
+    "password": "oracle",
+    "sid": "xe",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true
+}
