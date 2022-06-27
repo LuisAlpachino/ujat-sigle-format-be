@@ -4,16 +4,17 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SingleFormatModule } from './single-format/single-format.module';
 import { SingleFormat } from './single-format/entities/single-format.entity';
-
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'oracle',
-      host: 'localhost',
-      port: 49161,
-      username: 'UJAT',
-      password: 'oracle',
-      sid: 'xe',
+      type: process.env.ORACLE_DATABASE_TYPE as 'oracle',
+      host: process.env.ORACLE_DATABASE_HOST,
+      port: Number.parseInt(process.env.ORACLE_DATABASE_PORT),
+      username: process.env.ORACLE_DATABASE_USER,
+      password: process.env.ORACLE_DATABASE_PASSWORD,
+      sid: process.env.ORACLE_DATABASE_SID,
       entities: [SingleFormat],
       logging: true,
     }),
