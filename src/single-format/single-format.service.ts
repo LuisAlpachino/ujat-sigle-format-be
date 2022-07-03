@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateSingleFormatDto } from './dto/create-single-format.dto';
 import { UpdateSingleFormatDto } from './dto/update-single-format.dto';
 import { SingleFormat } from './entities/single-format.entity';
+import singleFormatQuery from './querys/single-format';
 
 @Injectable()
 export class SingleFormatService {
@@ -16,8 +17,17 @@ export class SingleFormatService {
     return 'This action adds a new singleFormat';
   }
 
-  findAll(): Promise<SingleFormat[]> {
-    return this.singleFormatRepository.find();
+  findAll(params: {
+    monthStart: string;
+    monthEnd: string;
+    yearStart: string;
+  }): Promise<SingleFormat[]> {
+    const { monthStart, monthEnd, yearStart } = params;
+    return this.singleFormatRepository.query(singleFormatQuery, [
+      monthStart,
+      monthEnd,
+      yearStart,
+    ]);
   }
 
   findOne(id: number) {

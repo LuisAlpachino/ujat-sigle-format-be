@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Header,
+  Query,
 } from '@nestjs/common';
 import { SingleFormatService } from './single-format.service';
 import { CreateSingleFormatDto } from './dto/create-single-format.dto';
@@ -23,8 +24,13 @@ export class SingleFormatController {
 
   @Get()
   @Header('Content-Type', 'application/json')
-  async findAll() {
-    const response = await this.singleFormatService.findAll();
+  async findAll(@Query() query) {
+    const { monthStart, monthEnd, yearStart } = query;
+    const response = await this.singleFormatService.findAll({
+      monthStart,
+      monthEnd,
+      yearStart,
+    });
     return {
       count: response.length,
       data: response,
